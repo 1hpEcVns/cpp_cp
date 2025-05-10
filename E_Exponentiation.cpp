@@ -23,7 +23,7 @@ int main() {
       auto t = p.find(y);
       if (t != p.end())
         return t->second;
-      for (auto [i, j] : views::zip(b[x], b[y]))
+      for (auto const &[i, j] : views::zip(b[x], b[y]))
         if (cmp(i, j))
           return p.emplace(y, cmp(i, j)).first->second;
       return p
