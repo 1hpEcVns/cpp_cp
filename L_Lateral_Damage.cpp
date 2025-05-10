@@ -1,3 +1,5 @@
+// 这是一道交互和构造题
+// 解题策略即五子棋必胜策略
 #include <algorithm>
 #include <iostream>
 #include <print>
