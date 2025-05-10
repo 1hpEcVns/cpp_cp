@@ -1,3 +1,4 @@
+// 智能指针性能不如裸指针，可能受锁和内存管理开销影响 大约5倍差异
 #include <algorithm> // For std::swap, std::reverse
 #include <array>
 #include <iostream>
