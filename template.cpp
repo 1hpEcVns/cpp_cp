@@ -15,10 +15,10 @@
 using namespace std;
 using namespace views;
 
-int main() {
+auto main() -> int {
   ios::sync_with_stdio(false), cin.tie(nullptr);
   int n;
-  auto a = is<int>(cin) | to<vc<int>>();
+  auto a = is<int>(cin) | to<vc>();
   rs(a);
   for (auto &&[i, x] : en(a))
     cout << x << " \n"[i == n - 1];
