@@ -1,3 +1,6 @@
+// 这是一道分层图广度优先搜索题
+// 判断所有可以到达的点 有两种交替的走姿
+// 所以需要分层图 但答案需要取交集
 #include <algorithm>
 #include <array>
 #include <iostream>
