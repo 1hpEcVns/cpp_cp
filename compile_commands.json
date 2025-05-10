@@ -1,0 +1,7 @@
+[
+  {
+    "directory": "D:/cph",
+    "command": "clang++ -std=c++23 a.cpp -o a",
+    "file": "a.cpp"
+  }
+]
