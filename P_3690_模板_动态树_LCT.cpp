@@ -5,7 +5,7 @@
 using namespace std;
 char buf[100005], *p1 = buf, *p2 = buf;
 char obuf[100005], *p3 = obuf, *p4 = obuf + 35;
-char gtchar() {
+auto gtchar() -> char {
   if (p1 == p2) [[unlikely]] {
     p1 = buf;
     p2 = p1 + fread(buf, 1, sizeof(buf), stdin);
@@ -15,7 +15,7 @@ char gtchar() {
   }
   return *p1++;
 }
-int read() {
+auto read() -> int {
   int ret = 0;
   char ch = gtchar();
   while (ch < '0' || ch > '9') [[unlikely]]
