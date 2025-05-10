@@ -36,7 +36,6 @@ auto main() -> int {
                         ranges::to<vector>();
                }) |
                ranges::to<vector>();
-      // 使用类模板自动推导简化ranges::to和vector的构造
       auto f = vector(1 << n, vector(n, 1e18));
       for (int i : iota(0, n))
         f[1 << i][i] = 0;
