@@ -1,3 +1,5 @@
+// 这是一道构造题
+// 输出比较复杂 需要考虑很多情况
 #include <array>
 #include <iostream>
 #include <print>
