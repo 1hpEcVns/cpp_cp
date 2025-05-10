@@ -1,3 +1,4 @@
+// 指针性能不如直接数组索引
 #include <cstdio>
 #include <vector>
 
