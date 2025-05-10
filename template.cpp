@@ -20,6 +20,7 @@ auto main() -> int {
   int n;
   auto a = is<int>(cin) | to<vc>();
   rs(a);
+#pragma unroll 4
   for (auto &&[i, x] : en(a))
     cout << x << " \n"[i == n - 1];
-} 
+}
