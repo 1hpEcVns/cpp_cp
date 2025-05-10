@@ -7,7 +7,7 @@
 
 using namespace std;
 
-int main() {
+auto main() -> int {
   auto n = 0, m = 0;
   cin >> n >> m;
   auto a = vector<int>(n);
