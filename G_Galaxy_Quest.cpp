@@ -40,7 +40,7 @@ auto main() -> int {
   auto Q = [m]() {
     auto Q_mem = vector<pair<double, int>>();
     return Q_mem.reserve(m), priority_queue(greater{}, std::move(Q_mem));
-  }();
+  }();//采用了预留空间 减少内存分配次数 提高性能 使用模板参数自动推导让代码更简洁
   auto f = vector<double>(n, 1e9);
   auto h = [&f, &Q](const pair<double, int> &a) {
     if (a.first < f[a.second])
