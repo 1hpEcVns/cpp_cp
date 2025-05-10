@@ -7,7 +7,7 @@
 using namespace std;
 using namespace views;
 
-int main() {
+auto main() -> int {
   int64_t a, b, c, d;
   cin >> a >> b >> c >> d;
   auto A = to_string(a), B = to_string(b);
