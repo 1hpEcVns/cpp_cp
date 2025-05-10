@@ -16,7 +16,7 @@ int main() {
   int n;
   f64 ans = 1e18;
   cin >> n;
-  vector<array<int, 2>> a(n);
+  auto a = vector(n, array{0, 0});
   for (auto &&[x, y] : a)
     cin >> x >> y;
   for (auto &&[i, A] : enumerate(a))
