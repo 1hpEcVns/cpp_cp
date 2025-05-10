@@ -36,7 +36,7 @@ auto main() -> int {
       g[u].emplace_back(d, v), g[v].emplace_back(d, u);
     }
     return g;
-  }();
+  }();//这里的lambda表达式立即调用构造可以减少内存管理开销和命名冲突
   auto Q = [m]() {
     auto Q_mem = vector<pair<double, int>>();
     return Q_mem.reserve(m), priority_queue(greater{}, std::move(Q_mem));
