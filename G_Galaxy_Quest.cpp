@@ -1,3 +1,7 @@
+// 这是一道最短路问题
+// 需要使用堆优化Dijkstra算法
+// 使用优先队列实现
+// 注意建图要开根号
 #include <array>
 #include <cassert>
 #include <cmath>
