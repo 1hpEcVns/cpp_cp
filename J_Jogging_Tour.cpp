@@ -28,15 +28,16 @@ int main() {
                  auto [x, y] = p;
                  return array{x * c - y * s, x * s + y * c};
                }) |
-               ranges::to<vector<array<f64, 2>>>();
+               ranges::to<vector>();
       auto g = b | ts([&](const auto &x) {
                  return b | ts([&](const auto &y) {
                           return abs(x[0] - y[0]) + abs(x[1] - y[1]);
                         }) |
-                        ranges::to<vector<f64>>();
+                        ranges::to<vector>();
                }) |
-               ranges::to<vector<vector<f64>>>();
-      auto f = vector<vector<f64>>(1 << n, vector<f64>(n, 1e18));
+               ranges::to<vector>();
+      // 使用类模板自动推导简化ranges::to和vector的构造
+      auto f = vector(1 << n, vector(n, 1e18));
       for (int i : iota(0, n))
         f[1 << i][i] = 0;
       for (auto &&[i, F] : enumerate(f) | drop(1))
