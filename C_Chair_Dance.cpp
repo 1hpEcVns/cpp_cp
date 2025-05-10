@@ -1,3 +1,7 @@
+// 数论 线性同余方程 逆元
+// 本代码没有使用桶排序 性能较低
+// 每次去掉同余产生的重复元素后 至少减半
+// 所以时间复杂度为 O(nlogn)
 #include <algorithm>
 #include <array>
 #include <iostream>
