@@ -1,3 +1,4 @@
+// 贪心算法 注意边界情况
 #include <algorithm>
 #include <array>
 #include <iostream>
