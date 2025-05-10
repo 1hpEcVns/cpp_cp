@@ -1,3 +1,5 @@
+//这是一个可持久化动态树问题 存在低于O(n^2)的解法
+// 但是本题数据范围较小 所以可以暴力
 #include <algorithm>
 #include <iostream>
 #include <print>
