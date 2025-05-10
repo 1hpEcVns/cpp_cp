@@ -11,7 +11,7 @@ using namespace std;
 using namespace views;
 using f64 = double;
 
-int main() {
+auto main() -> int {
   ios::sync_with_stdio(false), cin.tie(nullptr);
   int n;
   f64 ans = 1e18;
