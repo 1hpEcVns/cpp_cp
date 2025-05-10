@@ -29,18 +29,23 @@ auto main() -> int {
   const auto S = views::iota(static_cast<u16>(1), static_cast<u16>(1 << D)) |
                  filter([d](u16 const &s) { return popcount(s) == d; }) |
                  ranges::to<vector>();
-  for_each(execution::par_unseq, S.begin(), S.end(), [&ans, h, H, a](const auto s) {
-    auto c = vector(H, u16{});
-    for (auto &&[i, a] : enumerate(a) | filter([s](auto const &x) {
-                           return (s >> get<0>(x)) & 1;
-                         }))
-      for (auto &&[x, y] : zip(c, a))
-        x += y;
-    ranges::sort(c, greater{});
-    ans = max(ans, accumulate(c.begin(), c.begin() + h, 0));
-  });
+  for_each(execution::par_unseq, S.begin(), S.end(),
+           [&ans, h, H, a](const auto s) {
+             auto c = vector(H, u16{});
+             for (auto &&[i, a] : enumerate(a) | filter([s](auto const &x) {
+                                    return (s >> get<0>(x)) & 1;
+                                  }))
+               for (auto &&[x, y] : zip(c, a))
+                 x += y;
+             ranges::sort(c, greater{});
+             ans = max(ans, accumulate(c.begin(), c.begin() + h, 0));
+           });
   print("{:.15f}", static_cast<double>(ans) / (d * h));
 }
+// 原代码使用了并行计算 for_each 配合 execution::par_unseq 来加速
+// 这是一个暴力解法的加速方案 是一个有益的尝试
+// 说明了range for可以轻松使用并行计算来加速
+// 注释掉的是常规for循环
 // for (u16 s : views::iota(static_cast<u16>(1), static_cast<u16>(1 << D)) |
 //                    filter([d](u16 const &s) { return popcount(s) == d; })) {
 //     auto c = vector(H, u16{});
