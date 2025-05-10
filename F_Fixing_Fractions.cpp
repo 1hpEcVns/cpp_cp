@@ -1,3 +1,8 @@
+// 这是一道暴力枚举题
+// 使用位运算枚举枚举所有可能的分子
+// 然后判断是否满足条件
+// 使用__int128来避免溢出
+// 注意clang++没有__int128 但是OJ支持
 #include <cstdint>
 #include <iostream>
 #include <print>
