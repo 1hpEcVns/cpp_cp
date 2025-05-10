@@ -5,7 +5,6 @@
 #include <memory>
 #include <vector>
 
-
 // Define The Modulo Constant
 const int MOD = 51061;
 
@@ -13,24 +12,22 @@ class LinkCutTree {
 private:
   struct Node : std::enable_shared_from_this<Node> {
     int id;
-    long long value; // Node's own value, modulo MOD
-    long long
-        subtree_sum; // Sum of values in this node's Splay subtree, modulo MOD
-    int size;        // Number of nodes in this Splay subtree
+    long long value = 1; // Node's own value, modulo MOD
+    long long subtree_sum =
+        1;        // Sum of values in this node's Splay subtree, modulo MOD
+    int size = 1; // Number of nodes in this Splay subtree
 
-    bool reversed;
-    long long lazy_add; // Lazy addition tag, modulo MOD
-    long long lazy_mul; // Lazy multiplication tag, modulo MOD
+    bool reversed = false;
+    long long lazy_add = 0; // Lazy addition tag, modulo MOD
+    long long lazy_mul = 1; // Lazy multiplication tag, modulo MOD
 
     std::weak_ptr<Node> parent_weak;
     std::array<std::shared_ptr<Node>, 2> children;
 
-    Node(int _id)
-        : id(_id), value(1), subtree_sum(1), size(1), // Initial value is 1
-          reversed(false), lazy_add(0), lazy_mul(1) {}
+    Node(int _id) : id(_id) {}
 
-    __attribute__((always_inline)) inline std::shared_ptr<Node>
-    get_splay_parent() const {
+    [[nodiscard]] __attribute__((always_inline)) auto get_splay_parent() const
+        -> std::shared_ptr<Node> {
       return parent_weak.lock();
     }
   };
@@ -39,7 +36,7 @@ private:
   std::vector<NodePtr> nodes_map;
   std::vector<NodePtr> splay_path_cache_;
 
-  __attribute__((always_inline)) inline long long
+  [[nodiscard]] __attribute__((always_inline)) auto
   normalize(long long val) const {
     val %= MOD;
     if (val < 0)
@@ -120,7 +117,7 @@ private:
     }
   }
 
-  __attribute__((always_inline)) inline bool
+  [[nodiscard]] __attribute__((always_inline)) auto
   is_splay_tree_root(const NodePtr &x) const {
     if (!x || x->parent_weak.expired())
       return true;
@@ -136,7 +133,7 @@ private:
       c->parent_weak = p; // Set child's splay parent
   }
 
-  __attribute__((always_inline)) inline int
+  [[nodiscard]] __attribute__((always_inline)) auto
   get_splay_child_direction_from_parent(const NodePtr &x,
                                         const NodePtr &y) const {
     return y->children[1] == x;
@@ -177,7 +174,7 @@ private:
       }
     }
 
-    std::reverse(splay_path_cache_.begin(), splay_path_cache_.end());
+    std::ranges::reverse(splay_path_cache_);
     for (const auto &node_on_path : splay_path_cache_) {
       if (node_on_path)
         push_down(node_on_path);
@@ -225,7 +222,8 @@ public:
     }
   }
 
-  __attribute__((always_inline)) NodePtr get_node_ptr(int id) {
+  [[nodiscard]] __attribute__((always_inline)) auto get_node_ptr(int id)
+      -> NodePtr {
     if (id >= 1 && static_cast<size_t>(id) < nodes_map.size()) {
       return nodes_map[id];
     }
@@ -270,7 +268,8 @@ public:
     push_down(x); // Propagate reversal to children immediately
   }
 
-  int find_root_id(int x_id) {
+  [[nodiscard]] __attribute__((always_inline)) auto find_root_id(int x_id)
+      -> int {
     NodePtr x = get_node_ptr(x_id);
     if (!x)
       return 0;
@@ -361,7 +360,9 @@ public:
     }
   }
 
-  long long query_path_sum(int u_id, int v_id) {
+  [[nodiscard]] __attribute__((always_inline)) auto query_path_sum(int u_id,
+                                                                   int v_id)
+      -> long long {
     NodePtr u_node = get_node_ptr(u_id);
     NodePtr v_node = get_node_ptr(v_id);
     if (!u_node || !v_node)
@@ -379,7 +380,7 @@ public:
   }
 };
 
-int main() {
+auto main() -> int {
   std::ios_base::sync_with_stdio(false);
   std::cin.tie(nullptr);
   std::cout.tie(nullptr);
