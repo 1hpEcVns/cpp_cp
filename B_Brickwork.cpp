@@ -17,7 +17,7 @@
 #include <vector>      // For storing student data and processing steps
 
 // --- Structs, Concepts, Constants  ---
-struct Student {
+struct __attribute__((aligned(16))) Student {
   int id;
   double score;
 };
@@ -25,13 +25,13 @@ template <typename R>
 concept StudentRange = std::ranges::input_range<R> &&
                        std::same_as<std::ranges::range_value_t<R>, Student>;
 
-constexpr size_t NUM_STUDENTS = 30;
-constexpr double MAX_SCORE = 100.0;
-constexpr double MIN_SCORE = 0.0;
-constexpr double PASS_THRESHOLD = 60.0;
-constexpr double EXCELLENT_THRESHOLD = 85.0;
-constexpr double SCORE_MEAN_CENTER = 70.0;
-constexpr double SCORE_STD_DEV = 30.0;
+constexpr size_t numStudents = 30;
+constexpr double maxScore = 100.0;
+constexpr double minScore = 0.0;
+constexpr double passThreshold = 60.0;
+constexpr double excellentThreshold = 85.0;
+constexpr double scoreMeanCenter = 70.0;
+constexpr double scoreStdDev = 30.0;
 
 using SingleStudentResult = std::expected<Student, std::string>;
 
@@ -39,19 +39,20 @@ using SingleStudentResult = std::expected<Student, std::string>;
 auto generate_single_student(int student_id) -> SingleStudentResult {
   static std::mt19937 engine(
       std::chrono::system_clock::now().time_since_epoch().count());
-  std::normal_distribution<double> score_dist(SCORE_MEAN_CENTER, SCORE_STD_DEV);
+  std::normal_distribution<double> score_dist(scoreMeanCenter, scoreStdDev);
   std::uniform_int_distribution<int> error_injector(1, 20);
   double generated_score = score_dist(engine);
   bool injected_error = (error_injector(engine) == 1);
+
 
   if (injected_error) {
     return std::unexpected(
         std::format("Generation failed: {}", "Simulated random error"));
   }
-  if (generated_score < MIN_SCORE || generated_score > MAX_SCORE) {
+  if (generated_score < minScore || generated_score > maxScore) {
     return std::unexpected(std::format(
         "Generation failed: Raw score {:.2f} out of range [{:.1f}, {:.1f}]",
-        generated_score, MIN_SCORE, MAX_SCORE));
+        generated_score, minScore, maxScore));
   }
   return Student{.id = student_id, .score = generated_score};
 }
@@ -154,13 +155,13 @@ auto make_custom_logic_step(std::string &&main_title,
 // --- Main Program ---
 auto main() -> int {
   std::vector<Student> students;
-  students.reserve(NUM_STUDENTS);
+  students.reserve(numStudents);
   size_t current_id_index = 0;
 
   std::println("========== Generating Data for {} Students (Normal Dist., "
                "Retry on Error) ==========",
-               NUM_STUDENTS);
-  while (students.size() < NUM_STUDENTS) {
+               numStudents);
+  while (students.size() < numStudents) {
     const int target_id = static_cast<int>(current_id_index + 1);
     size_t attempt_count = 0;
     std::print("  Generating data for ID {:<4}...", target_id);
@@ -192,15 +193,15 @@ auto main() -> int {
       // Step 1: Excellent Students (Filter & Print)
       make_filter_print_step(
           "(1) Filter: Excellent Students",
-          std::format("List: Score > {:.1f}", EXCELLENT_THRESHOLD),
-          [](const Student &s) { return s.score > EXCELLENT_THRESHOLD; },
+          std::format("List: Score > {:.1f}", excellentThreshold),
+          [](const Student &s) { return s.score > excellentThreshold; },
           true), // Comma separates elements
 
       // Step 2: Failing Students (Filter & Print)
       make_filter_print_step(
           "(2) Filter: Failing Students",
-          std::format("List: Score < {:.1f}", PASS_THRESHOLD),
-          [](const Student &s) { return s.score < PASS_THRESHOLD; }, true),
+          std::format("List: Score < {:.1f}", passThreshold),
+          [](const Student &s) { return s.score < passThreshold; }, true),
 
       // Step 3: Calculate Average and Print Students Above Average (Custom
       // Logic - FIXED)
@@ -263,7 +264,7 @@ auto main() -> int {
                 data_to_sort_and_print, // Pass the now-sorted data
                 false);
           })};
-  
+
   // Execute the steps
   for (const auto &step : processing_steps) {
     execute_processing_step(step, students);
