@@ -90,12 +90,13 @@ struct Node {
       p->fa->ch[p->childtype()] = this;
     fa = fa->fa;
     p->addson(ch[!d], d), addson(p, !d);
-    p->pushup(), pushup();
+    p->pushup();
   }
   [[gnu::always_inline]] auto splay() {
     for (down(); notroot(); rotate())
       if (fa->notroot())
         childtype() ^ fa->childtype() ? rotate() : fa->rotate();
+    pushup();
   }
   [[gnu::always_inline]] auto access(Node *i) {
     for (Node *j = nullptr; i; j = i, i = i->fa)
@@ -140,7 +141,7 @@ auto main() -> int {
     if (o == 2)
       i->cut(j);
     if (o == 3)
-      i->splay2root(), i->val = y, i->pushup();
+      i->splay(), i->val = y;
   }
   fwrite(obuf, 1, p3 - obuf, stdout);
 }
