@@ -220,6 +220,7 @@ auto main() -> int {
             }
 
             std::span<const Student> view = data;
+            
 
             // FIX 2: Use std::accumulate from <numeric> with iterators
             double sum_of_scores =
