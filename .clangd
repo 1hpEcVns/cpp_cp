@@ -10,7 +10,7 @@ Diagnostics:
     # 'Checks' 是一个有效的键，'Override' (或 'Add') 在其之下
     Add:
       - abseil-*
-      - altera-*
+      # - altera-*
       - android-*
       - boost-*
       - bugprone-*
@@ -18,7 +18,7 @@ Diagnostics:
       - concurrency-*
       - cppcoreguidelines-*
       - darwin-*
-      - fuchsia-*
+      # - fuchsia-*
       - google-* # 包括 google-build, google-objc, google-readability, google-runtime, google-upgrade
       - hicpp-*
       - linuxkernel-*
@@ -31,7 +31,7 @@ Diagnostics:
       - openmp-*
       - performance-*
       - portability-*
-      - readability-*
+      # - readability-*
       - zircon-*
       - clang-analyzer-*
     # 排除某些检查
@@ -43,13 +43,7 @@ Diagnostics:
       - fuchsia-trailing-return
       # - fuchsia-default-arguments-calls
     # 允许运行慢速检查
-    Arguments:
-      - --warnings-as-errors=*
-      # 使用积极过滤（只包含你自己的代码路径）通常更可靠
-      - --header-filter=^(src|include)/.*
-      # 或者更严格地排除已知的系统和第三方库路径 (请根据实际情况调整路径)
-      # - --header-filter=^(?!/(usr|opt)/|.*/(third_party|external|vendor|build)/).*
-    # 键是 "check-name.OptionName"，值是选项的值。
+
     CheckOptions:
       readability-identifier-naming.ClassCase: CamelCase
       readability-identifier-naming.StructCase: CamelCase # 或 camelBack, snake_case，视团队规范而定
